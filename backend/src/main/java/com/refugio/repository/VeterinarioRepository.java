@@ -1,9 +1,9 @@
 package com.refugio.repository;
 
-import com.refugio.model.Mascota;
+import com.refugio.model.Veterinario;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface MascotaRepository extends JpaRepository<Mascota, Long> {
+public interface VeterinarioRepository extends JpaRepository<Veterinario, Long> {
 }

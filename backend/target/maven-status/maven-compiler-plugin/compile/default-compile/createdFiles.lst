@@ -1,0 +1,9 @@
+com\refugio\model\Veterinario.class
+com\refugio\ProyectoRefugioApplication.class
+com\refugio\repository\AdopcionRepository.class
+com\refugio\model\Usuario.class
+com\refugio\model\Mascota.class
+com\refugio\repository\MascotaRepository.class
+com\refugio\repository\VeterinarioRepository.class
+com\refugio\repository\UsuarioRepository.class
+com\refugio\model\Adopcion.class

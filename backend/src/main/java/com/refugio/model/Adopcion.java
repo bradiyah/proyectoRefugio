@@ -1,24 +1,31 @@
 package com.refugio.model;
 
 import jakarta.persistence.*;
-import lombok.Data;
 import java.time.LocalDate;
 
 @Entity
 @Table(name = "adopciones")
-@Data
 public class Adopcion {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne // Muchas adopciones pueden referirse a una mascota
-    @JoinColumn(name = "mascota_id")
+    @ManyToOne
     private Mascota mascota;
 
-    @ManyToOne // Un usuario puede hacer muchas adopciones
-    @JoinColumn(name = "usuario_id")
+    @ManyToOne
     private Usuario usuario;
 
     private LocalDate fechaAdopcion;
+
+    public Adopcion() {}
+
+    public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
+    public Mascota getMascota() { return mascota; }
+    public void setMascota(Mascota mascota) { this.mascota = mascota; }
+    public Usuario getUsuario() { return usuario; }
+    public void setUsuario(Usuario usuario) { this.usuario = usuario; }
+    public LocalDate getFechaAdopcion() { return fechaAdopcion; }
+    public void setFechaAdopcion(LocalDate fechaAdopcion) { this.fechaAdopcion = fechaAdopcion; }
 }

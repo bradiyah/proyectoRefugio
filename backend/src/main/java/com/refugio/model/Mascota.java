@@ -1,15 +1,24 @@
 package com.refugio.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
 
 @Entity
 @Table(name = "mascotas")
 public class Mascota {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @NotBlank(message = "¡El nombre del animal no puede estar vacío!")
     private String nombre;
+
+    @NotBlank(message = "¡Debes especificar la especie!")
     private String especie;
+
+    @Min(value = 0, message = "La edad no puede ser un número negativo")
     private int edad;
 
     public Mascota() {}

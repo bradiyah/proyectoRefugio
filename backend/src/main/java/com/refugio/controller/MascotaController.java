@@ -2,6 +2,7 @@ package com.refugio.controller;
 
 import com.refugio.model.Mascota;
 import com.refugio.repository.MascotaRepository;
+import jakarta.validation.Valid; // <-- IMPORTANTE: Esta es la herramienta del portero
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,9 +21,9 @@ public class MascotaController {
         return mascotaRepository.findAll();
     }
 
-    // 2. Guardar una nueva mascota
+    // 2. Guardar una nueva mascota (CON EL PORTERO @Valid)
     @PostMapping
-    public Mascota guardarMascota(@RequestBody Mascota mascota) {
+    public Mascota guardarMascota(@Valid @RequestBody Mascota mascota) {
         return mascotaRepository.save(mascota);
     }
 
@@ -44,4 +45,23 @@ public class MascotaController {
         return mascotaRepository.buscarDisponibles();
     }
 
+    // 5. Actualizar los datos de una mascota (CON EL PORTERO @Valid)
+    @PutMapping("/{id}")
+    public Mascota actualizarMascota(@PathVariable Long id, @Valid @RequestBody Mascota mascotaActualizada) {
+        // Primero buscamos si la mascota existe
+        Mascota mascotaExistente = mascotaRepository.findById(id).orElse(null);
+
+        if (mascotaExistente != null) {
+            // Si existe, le actualizamos los datos
+            mascotaExistente.setNombre(mascotaActualizada.getNombre());
+            mascotaExistente.setEspecie(mascotaActualizada.getEspecie());
+            mascotaExistente.setEdad(mascotaActualizada.getEdad());
+
+            // Y la volvemos a guardar en la base de datos
+            return mascotaRepository.save(mascotaExistente);
+        }
+
+        // Si no existe, no devolvemos nada
+        return null;
+    }
 }

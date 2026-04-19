@@ -6,4 +6,9 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface AdopcionRepository extends JpaRepository<Adopcion, Long> {
+
+    // Esta línea le pide a Spring que mire si existe alguna adopción con el ID de esa mascota
+    boolean existsByMascotaId(Long mascotaId);
+
+
 }

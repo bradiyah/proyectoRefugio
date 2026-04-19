@@ -10,6 +10,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/mascotas")
+@CrossOrigin(origins = "*")
 public class MascotaController {
 
     @Autowired
@@ -56,6 +57,8 @@ public class MascotaController {
             mascotaExistente.setNombre(mascotaActualizada.getNombre());
             mascotaExistente.setEspecie(mascotaActualizada.getEspecie());
             mascotaExistente.setEdad(mascotaActualizada.getEdad());
+
+            mascotaExistente.setMeses(mascotaActualizada.getMeses());
 
             // Y la volvemos a guardar en la base de datos
             return mascotaRepository.save(mascotaExistente);

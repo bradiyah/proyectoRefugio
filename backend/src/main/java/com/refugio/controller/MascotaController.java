@@ -1,8 +1,8 @@
 package com.refugio.controller;
 
 import com.refugio.model.Mascota;
-import com.refugio.repository.MascotaRepository;
-import jakarta.validation.Valid; // <-- IMPORTANTE: Esta es la herramienta del portero
+import com.refugio.service.MascotaService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,58 +13,27 @@ import java.util.List;
 @CrossOrigin(origins = "*")
 public class MascotaController {
 
-    @Autowired
-    private MascotaRepository mascotaRepository;
+  // ¡NUEVO! Ahora el controlador llama al Service, NO al Repository
+  @Autowired
+  private MascotaService mascotaService;
 
-    // 1. Ver todas las mascotas
-    @GetMapping
-    public List<Mascota> listarMascotas() {
-        return mascotaRepository.findAll();
-    }
+  @GetMapping
+  public List<Mascota> obtenerMascotas() {
+    return mascotaService.obtenerTodasLasMascotas();
+  }
 
-    // 2. Guardar una nueva mascota (CON EL PORTERO @Valid)
-    @PostMapping
-    public Mascota guardarMascota(@Valid @RequestBody Mascota mascota) {
-        return mascotaRepository.save(mascota);
-    }
+  @PostMapping
+  public Mascota guardarMascota(@Valid @RequestBody Mascota mascota) {
+    return mascotaService.guardarMascota(mascota);
+  }
 
-    // 3. Buscar una mascota por su ID
-    @GetMapping("/{id}")
-    public Mascota buscarPorId(@PathVariable Long id) {
-        return mascotaRepository.findById(id).orElse(null);
-    }
+  @PutMapping("/{id}")
+  public Mascota actualizarMascota(@PathVariable Long id, @Valid @RequestBody Mascota mascota) {
+    return mascotaService.actualizarMascota(id, mascota);
+  }
 
-    // 4. Borrar una mascota
-    @DeleteMapping("/{id}")
-    public void borrarMascota(@PathVariable Long id) {
-        mascotaRepository.deleteById(id);
-    }
-
-    // Nuevo: Ver solo mascotas que NO han sido adoptadas
-    @GetMapping("/disponibles")
-    public List<Mascota> listarDisponibles() {
-        return mascotaRepository.buscarDisponibles();
-    }
-
-    // 5. Actualizar los datos de una mascota (CON EL PORTERO @Valid)
-    @PutMapping("/{id}")
-    public Mascota actualizarMascota(@PathVariable Long id, @Valid @RequestBody Mascota mascotaActualizada) {
-        // Primero buscamos si la mascota existe
-        Mascota mascotaExistente = mascotaRepository.findById(id).orElse(null);
-
-        if (mascotaExistente != null) {
-            // Si existe, le actualizamos los datos
-            mascotaExistente.setNombre(mascotaActualizada.getNombre());
-            mascotaExistente.setEspecie(mascotaActualizada.getEspecie());
-            mascotaExistente.setEdad(mascotaActualizada.getEdad());
-
-            mascotaExistente.setMeses(mascotaActualizada.getMeses());
-
-            // Y la volvemos a guardar en la base de datos
-            return mascotaRepository.save(mascotaExistente);
-        }
-
-        // Si no existe, no devolvemos nada
-        return null;
-    }
+  @DeleteMapping("/{id}")
+  public void borrarMascota(@PathVariable Long id) {
+    mascotaService.borrarMascota(id);
+  }
 }

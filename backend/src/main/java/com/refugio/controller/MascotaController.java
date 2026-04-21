@@ -13,27 +13,26 @@ import java.util.List;
 @CrossOrigin(origins = "*")
 public class MascotaController {
 
-  // ¡NUEVO! Ahora el controlador llama al Service, NO al Repository
-  @Autowired
-  private MascotaService mascotaService;
+    @Autowired
+    private MascotaService mascotaService;
 
-  @GetMapping
-  public List<Mascota> obtenerMascotas() {
-    return mascotaService.obtenerTodasLasMascotas();
-  }
+    @GetMapping
+    public List<Mascota> obtenerMascotas() {
+        return mascotaService.obtenerTodasLasMascotas();
+    }
 
-  @PostMapping
-  public Mascota guardarMascota(@Valid @RequestBody Mascota mascota) {
-    return mascotaService.guardarMascota(mascota);
-  }
+    @PostMapping
+    public Mascota guardarMascota(@Valid @RequestBody Mascota mascota) {
+        return mascotaService.guardarMascota(mascota);
+    }
 
-  @PutMapping("/{id}")
-  public Mascota actualizarMascota(@PathVariable Long id, @Valid @RequestBody Mascota mascota) {
-    return mascotaService.actualizarMascota(id, mascota);
-  }
+    @PutMapping("/{id}")
+    public Mascota actualizarMascota(@PathVariable Long id, @Valid @RequestBody Mascota mascota) {
+        return mascotaService.actualizarMascota(id, mascota);
+    }
 
-  @DeleteMapping("/{id}")
-  public void borrarMascota(@PathVariable Long id) {
-    mascotaService.borrarMascota(id);
-  }
+    @DeleteMapping("/{id}")
+    public void borrarMascota(@PathVariable Long id) {
+        mascotaService.borrarMascota(id);
+    }
 }

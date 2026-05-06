@@ -5,6 +5,6 @@ services:
     restart: always
     environment:
       MARIADB_DATABASE: refugio_db
-      MARIADB_ROOT_PASSWORD: root
+      MARIADB_ROOT_PASSWORD: abc123.
     ports:
       - "3307:3306"  # Cambiamos 3306 por 3307 fuera del contenedor
